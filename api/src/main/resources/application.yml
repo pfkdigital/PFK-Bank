@@ -1,0 +1,26 @@
+spring:
+  application:
+    name: starling
+
+starling:
+  baseUrl: https://api-sandbox.starlingbank.com
+  accessToken: eyJhbGciOiJQUzI1NiIsInppcCI6IkdaSVAifQ.H4sIAAAAAAAA_21Ty46jMBD8lRHn6RHmEQO3ue0P7Ac0djuxBmxkm8yOVvvva2IIIcqNqupHtbv5m2nvsy7DSYOk0X74gG7Q5tyj-foQdszeMz_3MULkoioKJiFvVQNVX9bQs6IBrkrOWMGFrMoYTH-mrGOclQ1vS96-ZxpDInhbtAuBQtjZhF92kOR-a7nWZqQ49CgVVCgKwIoTMMWLuj2hqEsWawf7RSZlSM7yuqcasOgFVKdWAPI-hxwb7CuJRa4wZsSxPoUg7_c-JW8qqFneQkXNCXquJDR5U_aqZYq1S5YXdqLlUZJTuNysgsGROkco356E8DM9CVqSCVppckd-0D4cmBVI6aLJjqQOd5CUEFBcRrpH7vjb6UBvOIeLddrHlYE2Ul-1nHFIwT0OaMRqTaCTIKwJzg6p0cKsmjVKuxGDtgasAjUbuRoQsw923OagEfWaPaKRGKiTNFD0scFb2EgBI8JORLiIG75lTvhDtEkJrEUS2INAj3heayZt_4Tg0HgUi-c7DYMVcfq9diLALs_wzK5Zzio9bK1S7wN1i3IkSE_hAPxRSvvweI2r8HC2u48Dt4564G51Hpk0nIrP_qLELr6otYupqLiQnAeSEMfez8hTCHHAeVrhhNuZxP8_XlE8JuvkQ_sju_U9si_ywX6bOx9oMQDCX5-pSapEPe70tornJWf__gNlrfibsgQAAA.qlm8a89hajEBl3DxN_Y8wOqdALKRZO2ci8Yakubr6X_UHXiPOzgc8cOb-RXxrI0xntH6sn-YZfZCPIPnoJAZfQZlf_Adxz3UaoxlPYTBZjKwQ2T9L8plLBd2Ahxp0LNM20VVSJoKLurpeks6D1jWyzKPQE6sHKpArEfz_DodEXqGeeb1tG0q8rsR4mIc0bdRyX5_F1HfMDtq-fsaA_eLBwuSiOOHfAJwv5H83gHpFyjZNYdmCza1Ke8oXq41PAS9SdBA4m1vKmAvu-Qd0doPma7ykr7HSR2_xKhSi0Ylc3WJdJaB4zT4t3lnknonzTyj6vd-LOtBGJkVacXE1wnwZKSRh7eGvpc4obel9Eq6VbZrqrFy0ISqCA7REuEb_0ZKzDuujuSDsgBuJXQWI04q4bqS51OdhW00HMi3ecqVamYvr-Qejpt87VWjWxrL-xuCNA3RFwUttIoieIhU-uM0aYSG1bl6WpmYaZpdfyfw8JYta6q8CsViwxtPjI7Th_gpsg_zmkxkk2t4G20CKcZ49kSawSju_48MYn70uVpRErHstvsochYNhgRurATn7s49a1Pw52z4Vei5Mk79fQml00ZMg3Zvbrd4I9VuNz2G2XyP5HYZRFuAYN7UUZfWcgtis0t24uyJNXPpisLLcytdZThWebYyMdjMP6C6RwVXybQ
+  account:
+    all-accounts:
+      endpoint: /api/v2/accounts
+    balance:
+      endpoint: /api/v2/accounts/{accountUid}/balance
+    confirmation-of-funds:
+      endpoint: /api/v2/accounts/{accountUid}/confirmation-of-funds?targetAmountInMinorUnits={targetAmountInMinorUnits}
+  savings-goals:
+    all-savings-goals:
+      endpoint: /api/v2/account/{accountUid}/savings-goals
+    create-savings-goal:
+      endpoint: /api/v2/account/{accountUid}/savings-goals
+    transfer-money-to-savings-goal:
+      endpoint: /api/v2/account/{accountUid}/savings-goals/{savingsGoalUid}/add-money/{transferUid}
+  transaction:
+    transactions-weekly:
+      endpoint: /api/v2/feed/account/{accountUid}/category/{categoryUid}?changesSince={changesSince}
+    transactions-between:
+      endpoint: /api/v2/feed/account/{accountUid}/settled-transactions-between?minTransactionTimestamp={minTransactionTimestamp}&maxTransactionTimestamp={maxTransactionTimestamp}

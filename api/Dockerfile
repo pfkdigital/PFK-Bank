@@ -1,0 +1,14 @@
+# Start with a base image containing Java runtime
+FROM openjdk:17-jdk-slim
+
+# The application's .jar file
+ARG JAR_FILE=target/*.jar
+
+# Add the application's jar to the container
+ADD ${JAR_FILE} app.jar
+
+# Expose the port the app runs in
+EXPOSE 8080
+
+# Run the jar file 
+ENTRYPOINT ["java","-jar","/app.jar"]
