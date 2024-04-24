@@ -9,4 +9,5 @@ public class StarlingApplication {
     public static void main(String[] args) {
         SpringApplication.run(StarlingApplication.class, args);
     }
+
 }
