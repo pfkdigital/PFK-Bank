@@ -24,8 +24,7 @@ public interface TransactionFeedService {
      * @param minTransactionTimestamp minTransactionTimestamp
      * @param maxTransactionTimestamp maxTransactionTimestamp
      * @return FeedItems
-     *
-     * */
+     */
     FeedItems getTransactionFeedBetween(
             UUID accountUid,
             String minTransactionTimestamp,

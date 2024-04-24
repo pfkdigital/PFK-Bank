@@ -22,7 +22,6 @@ public class ExceptionHandlerAdvise {
     @ExceptionHandler(ApiRuntimeException.class)
     public ResponseEntity<ErrorResponse> handleStarlingApiRuntimeException(ApiRuntimeException e) throws IOException {
         ErrorResponse errorResponse = new ErrorResponse();
-        errorResponse.setSuccess(false);
         ErrorDetail errorDetail = new ErrorDetail(e.getMessage());
         ErrorDetail responseErrorDetail = new ErrorDetail(e.getResponse().getStatusText());
 
@@ -34,7 +33,6 @@ public class ExceptionHandlerAdvise {
     @ExceptionHandler(AccountNotFoundException.class)
     public ResponseEntity<ErrorResponse> handleAccountNotFoundException(AccountNotFoundException e) {
         ErrorResponse errorResponse = new ErrorResponse();
-        errorResponse.setSuccess(false);
         errorResponse.setErrors(Collections.singletonList(new ErrorDetail(e.getMessage())));
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
@@ -43,7 +41,6 @@ public class ExceptionHandlerAdvise {
     @ExceptionHandler(InsufficientFundsException.class)
     public ResponseEntity<ErrorResponse> handleInsufficientFundsException(InsufficientFundsException e) {
         ErrorResponse errorResponse = new ErrorResponse();
-        errorResponse.setSuccess(false);
         errorResponse.setErrors(Collections.singletonList(new ErrorDetail(e.getMessage())));
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
@@ -51,7 +48,6 @@ public class ExceptionHandlerAdvise {
     @ExceptionHandler(SavingGoalNotFoundException.class)
     public ResponseEntity<ErrorResponse> handleSavingGoalNotFoundException(SavingGoalNotFoundException e) {
         ErrorResponse errorResponse = new ErrorResponse();
-        errorResponse.setSuccess(false);
         errorResponse.setErrors(Collections.singletonList(new ErrorDetail(e.getMessage())));
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
