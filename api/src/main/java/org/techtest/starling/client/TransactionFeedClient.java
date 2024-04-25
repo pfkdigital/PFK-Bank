@@ -18,34 +18,8 @@ import java.util.UUID;
 public class TransactionFeedClient {
     private final BaseHttpClient baseHttpClient;
 
-    @Value("${starling.transaction.transactions-weekly.endpoint}")
-    private String weeksTransactionFeed;
-
     @Value("${starling.transaction.transactions-between.endpoint}")
     private String transactionFeedBetween;
-
-    /**
-     * Get all transactions for the week
-     *
-     * @param accountUid   accountUid
-     * @param categoryUid  categoryUid
-     * @param changesSince changesSince
-     * @return FeedItems
-     */
-    public FeedItems getWeeksTransactionFeed(UUID accountUid, UUID categoryUid, String changesSince) {
-        log.info("Getting all transactions for the week");
-        return baseHttpClient
-                .getRestClient()
-                .get()
-                .uri(weeksTransactionFeed, accountUid, categoryUid, changesSince)
-                .accept(MediaType.APPLICATION_JSON)
-                .retrieve()
-                .onStatus(HttpStatusCode::isError, (request, response) -> {
-                    log.error("Error while fetching all transactions for the week");
-                    throw new ApiRuntimeException(response,"Error while fetching all transactions for the week");
-                })
-                .body(FeedItems.class);
-    }
 
     /**
      * Get all transactions between two dates

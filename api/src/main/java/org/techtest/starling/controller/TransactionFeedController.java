@@ -16,13 +16,6 @@ import java.util.UUID;
 public class TransactionFeedController implements TransactionFeedApi {
     private final TransactionFeedService transactionFeedService;
 
-    @GetMapping("/account/{accountUid}/category/{categoryUid}")
-    public ResponseEntity<FeedItems> getFeedItems(
-            @PathVariable UUID accountUid, @PathVariable UUID categoryUid) {
-        return new ResponseEntity<>(
-                transactionFeedService.getWeeksTransactionFeed(accountUid, categoryUid), HttpStatus.OK);
-    }
-
     @GetMapping("/account/{accountUid}/time-between")
     public ResponseEntity<FeedItems> getFeedItems(
             @PathVariable UUID accountUid,

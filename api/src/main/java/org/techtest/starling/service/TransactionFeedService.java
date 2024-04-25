@@ -9,15 +9,6 @@ import java.util.UUID;
  */
 public interface TransactionFeedService {
     /**
-     * Get all transactions for the week
-     *
-     * @param accountUid  accountUid
-     * @param categoryUid categoryUid
-     * @return FeedItems
-     */
-    FeedItems getWeeksTransactionFeed(UUID accountUid, UUID categoryUid);
-
-    /**
      * Get all transactions between two dates
      *
      * @param accountUid              accountUid

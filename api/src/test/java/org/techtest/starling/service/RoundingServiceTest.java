@@ -99,7 +99,7 @@ class RoundingServiceTest {
 
         // Assert
         assertNotNull(roundUpResponse);
-        assertEquals("Round up of 10 transferred to saving goal: Test Savings Goal", roundUpResponse.getRoundUpMessage());
+        assertEquals("Round up of £10 transferred to saving goal: Test Savings Goal", roundUpResponse.getRoundUpMessage());
         assertEquals(savingsGoalTransferResponseV2, roundUpResponse.getTransferResponseV2());
 
         verify(accountService).getAccount(accountUid);

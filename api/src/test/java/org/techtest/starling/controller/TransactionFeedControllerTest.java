@@ -51,32 +51,6 @@ public class TransactionFeedControllerTest {
     }
 
     @Test
-    @DisplayName("Should return all transactions for an account for a week")
-    void shouldReturnAllTransactionsForAnAccountForAWeek() throws Exception {
-        //Arrange
-        String changesSince = "2024-04-02T00:00:00.000Z";
-        FeedItem feedItem = FeedItem.builder()
-                .feedItemUid(UUID.randomUUID())
-                .categoryUid(categoryUid)
-                .amount(CurrencyAndAmount.builder().currency("GBP").minorUnits(BigDecimal.valueOf(100)).build())
-                .direction(Direction.OUT)
-                .sourceAmount(CurrencyAndAmount.builder().currency("GBP").minorUnits(BigDecimal.valueOf(100)).build())
-                        .build();
-
-        FeedItems feedItems = FeedItems.builder().feedItems(List.of(feedItem)).build();
-
-        when(transactionFeedService.getWeeksTransactionFeed(accountUid, categoryUid)).thenReturn(feedItems);
-        //Act
-        ResultActions resultActions = mockMvc.perform(get("/api/v1/transactions/account/{accountUid}/category/{categoryUid}", accountUid, categoryUid).queryParam("changesSince", changesSince));
-
-        //Assert
-        assertEquals(200, resultActions.andReturn().getResponse().getStatus());
-        assertEquals(objectMapper.writeValueAsString(feedItems), resultActions.andReturn().getResponse().getContentAsString());
-
-        verify(transactionFeedService).getWeeksTransactionFeed(accountUid, categoryUid);
-    }
-
-    @Test
     @DisplayName("Should return all transactions for an account between two dates")
     void shouldReturnAllTransactionsForAnAccountBetweenTwoDates() throws Exception {
         //Arrange

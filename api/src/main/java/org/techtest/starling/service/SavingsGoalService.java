@@ -25,14 +25,6 @@ public interface SavingsGoalService {
     SavingGoalV2 getSingleSavingsGoal(UUID accountUid, UUID savingsGoalUid);
 
     /**
-     * Create new savings goals
-     * @param accountUid the accounts unique identifier
-     * @param savingsGoalRequestV2 the savings goal request
-     * @return CreateOrUpdateSavingsGoalResponse
-     */
-    CreateOrUpdateSavingsGoalResponseV2 createNewSavingsGoals(UUID accountUid, SavingsGoalRequestV2 savingsGoalRequestV2);
-
-    /**
      * Transfer money to savings goal
      * @param topUpRequestV2 the top-up request
      * @param accountUid the accounts unique identifier

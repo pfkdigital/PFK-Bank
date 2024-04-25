@@ -5,7 +5,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.techtest.starling.controller.api.SavingsGoalApi;
 import org.techtest.starling.model.SavingGoalsV2;
-import org.techtest.starling.model.SavingsGoalRequestV2;
 import org.techtest.starling.model.TopUpRequestV2;
 import org.techtest.starling.service.SavingsGoalService;
 
@@ -20,11 +19,6 @@ public class SavingsGoalController implements SavingsGoalApi {
     @GetMapping("/account/{accountUid}")
     public ResponseEntity<SavingGoalsV2> getSavingsGoals(@PathVariable UUID accountUid) {
         return ResponseEntity.ok(savingsGoalService.getSavingsGoals(accountUid));
-    }
-
-    @PutMapping("/account/{accountUid}")
-    public ResponseEntity<?> createNewSavingsGoals(@PathVariable UUID accountUid, @RequestBody SavingsGoalRequestV2 savingsGoalRequestV2) {
-        return ResponseEntity.ok(savingsGoalService.createNewSavingsGoals(accountUid, savingsGoalRequestV2));
     }
 
     @PutMapping("/account/{accountUid}/savings-goal/{savingsGoalUid}")

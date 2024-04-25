@@ -14,6 +14,7 @@ import org.techtest.starling.service.TransactionFeedService;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.Currency;
 
 @Service
 @Data
@@ -24,12 +25,6 @@ public class RoundingUpServiceImpl implements RoundingUpService {
     private final SavingsGoalService savingsGoalService;
     private final TransactionFeedService transactionFeedService;
 
-    /**
-     * Rounds up the transactions for the account and transfers the round up amount to the saving goal.
-     *
-     * @param roundUpRequest The round up request.
-     * @return The round up response.
-     */
     @Override
     public RoundUpResponse roundUp(RoundUpRequest roundUpRequest) {
         log.info("Rounding up for roundUpRequest: {}", roundUpRequest);
@@ -53,6 +48,7 @@ public class RoundingUpServiceImpl implements RoundingUpService {
         // Calculate round up
         log.info("Calculating round up for account: {} and feedItems: {}", account, feedItems);
         BigDecimal roundUpAmount = sumUpTransactionFeed(feedItems, account);
+        Currency currency = Currency.getInstance(account.getCurrency());
         log.info("Round up amount: {}", roundUpAmount);
 
         // Confirm that the round up amount will not put the account into overdraft
@@ -84,27 +80,24 @@ public class RoundingUpServiceImpl implements RoundingUpService {
 
         return RoundUpResponse.builder()
                 .transferResponseV2(savingsGoalTransferResponseV2)
-                .roundUpMessage("Round up of " + roundUpAmount + " transferred to saving goal: " + savingGoal.getName())
+                .roundUpMessage("Round up of " + currency.getSymbol() + roundUpAmount + " transferred to saving goal: " + savingGoal.getName())
                 .build();
     }
 
     /**
-     * Rounds up a transaction to the nearest whole number.
+     * Rounds up the transaction amount to the nearest whole number and returns the remainder.
      *
-     * @param transaction the transaction amount as a BigDecimal
-     * @return the rounded up amount as a BigDecimal
+     * @param transaction The transaction amount.
+     * @return The remainder.
      */
     public BigDecimal roundUpTransaction(BigDecimal transaction) {
-        BigDecimal rounded = transaction.setScale(0, RoundingMode.CEILING);
-        if (transaction.compareTo(rounded) == 0) {
-            // If the number is already a whole number, return one
-            return BigDecimal.ONE;
-        } else {
-            // If the number is not a whole number, return the remainder
-            BigDecimal remainder = rounded.subtract(transaction);
-            log.info("Transaction is not a whole number, rounding to the next whole number will be: {}", remainder);
-            return remainder;
-        }
+        BigDecimal transactionAmount = transaction.movePointLeft(2);
+        BigDecimal rounded = transactionAmount.setScale(0, RoundingMode.CEILING);
+
+        BigDecimal remainder = rounded.subtract(transactionAmount);
+
+        log.info("Transaction: {}, Rounded: {}, Remainder: {}", transactionAmount, rounded, remainder);
+        return remainder;
     }
 
     /**
@@ -125,7 +118,8 @@ public class RoundingUpServiceImpl implements RoundingUpService {
                 .map(this::roundUpTransaction)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
 
+        BigDecimal roundedMinorUnits = roundupSum.movePointRight(2);
         log.info("Sum of roundups: {}", roundupSum);
-        return roundupSum;
+        return roundedMinorUnits;
     }
 }

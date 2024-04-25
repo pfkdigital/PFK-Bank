@@ -23,14 +23,6 @@ public interface TransactionFeedApi {
             @ApiResponse(responseCode = "500", description = "Internal server error", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))})
     })
     ResponseEntity<FeedItems> getFeedItems(
-            @PathVariable UUID accountUid, @PathVariable UUID categoryUid);
-
-    @Operation(summary = "Get feed items", description = "fetches feed items")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Successfully retrieved feed items", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = FeedItems.class))}),
-            @ApiResponse(responseCode = "500", description = "Internal server error", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))})
-    })
-    ResponseEntity<FeedItems> getFeedItems(
             @PathVariable UUID accountUid,
             @RequestParam("minTransactionTimestamp") String minTransactionTimestamp,
             @RequestParam("maxTransactionTimestamp") String maxTransactionTimestamp);

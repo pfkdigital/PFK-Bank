@@ -27,15 +27,6 @@ public interface SavingsGoalApi {
     @GetMapping("/account/{accountUid}")
     ResponseEntity<?> getSavingsGoals(@PathVariable UUID accountUid);
 
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Successfully created new savings goals", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = SavingGoalV2.class))}),
-            @ApiResponse(responseCode = "404", description = "Account not found", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))}),
-            @ApiResponse(responseCode = "404", description = "Savings goals not found", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))}),
-            @ApiResponse(responseCode = "500", description = "Internal server error", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))})
-    })
-    @PutMapping("/account/{accountUid}")
-    ResponseEntity<?> createNewSavingsGoals(@PathVariable UUID accountUid, @RequestBody SavingsGoalRequestV2 savingsGoalRequestV2);
-
     @Operation(summary = "Transfer money to savings goal", description = "transfers money to a specific savings goal")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Successfully transferred money to savings goal", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = SavingsGoalTransferResponseV2.class))}),
