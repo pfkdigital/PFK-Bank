@@ -1,36 +1,57 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# README
 
-## Getting Started
+## Project Overview
 
-First, run the development server:
+This project is a web application built with TypeScript, JavaScript, React, and npm. The application is designed to manage saving goals. It allows users to select a saving goal from a list, view the details of the selected saving goal, and round up transactions to the nearest dollar, with the difference being transferred to the selected saving goal.
+
+## Code Structure
+
+The codebase is structured into several components, each responsible for a specific part of the application's functionality. Here are some key components:
+
+- `SavingGoal.tsx`: This is the main component of the application. It fetches the list of saving goals, handles the selection of a saving goal, and displays the selected saving goal's details.
+
+- `SavingsGoalDetails.tsx`: This component displays the details of a selected saving goal.
+
+- `RoundUpModal.tsx`: This component handles the rounding up of transactions and the transfer of the rounded-up amount to the selected saving goal.
+
+- `NoTransactionsFound.tsx`: This component is displayed when no transactions are found.
+
+## Running the Project
+
+Before running the project, make sure you have Node.js and npm installed on your machine.
+
+1. Clone the repository to your local machine.
+
+2. Navigate to the project directory in your terminal.
+
+3. Install the project dependencies by running the following command:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+4. Start the development server by running the following command:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm start
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+The application should now be running on `http://localhost:3000`.
 
-## Learn More
+## Docker
 
-To learn more about Next.js, take a look at the following resources:
+The project also includes a `Dockerfile` for building a Docker image of the application. To build the Docker image, navigate to the project directory in your terminal and run the following command:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+docker build -t my-app .
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+To run the Docker image, use the following command:
 
-## Deploy on Vercel
+```bash
+docker run -p 3000:3000 my-app
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+The application should now be running on `http://localhost:3000`.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Please note that the Docker setup is basic and might need to be adjusted based on your specific application needs.
