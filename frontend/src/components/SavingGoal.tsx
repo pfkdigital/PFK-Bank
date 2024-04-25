@@ -28,6 +28,7 @@ const SavingGoal = ({
   const [savingGoals, setSavingGoals] = React.useState<SavingGoal[]>();
   const [selectedSavingGoal, setSelectedSavingGoal] =
     React.useState<SavingGoal>();
+  const [updatedSavingGoal, setUpdatedSavingGoal] = React.useState<boolean>(false);
   useEffect(() => {
     if (accountUid) {
       getSavingGoals(accountUid).then((data) => {
@@ -44,6 +45,14 @@ const SavingGoal = ({
       setSelectedSavingGoal(selectedSavingGoal);
     }
   }, [savingGoalUid, savingGoals]);
+
+  useEffect(() => {
+    if(updatedSavingGoal) {
+      getSavingGoals(accountUid).then((data) => {
+        setSavingGoals(data.savingsGoalList);
+      });
+    }
+  }, [updatedSavingGoal]);
 
   return (
     <div className={"w-full h-auto my-10 flex justify-between items-center"}>
@@ -68,6 +77,7 @@ const SavingGoal = ({
             accountUid={accountUid}
             savingsGoalUid={savingGoalUid}
             selectedDate={selectedDate}
+            setUpdatedSavingGoal={setUpdatedSavingGoal}
           />
         )}
       </div>

@@ -19,12 +19,14 @@ interface RoundUpModalProps {
   accountUid: string;
   savingsGoalUid: string;
   selectedDate: Date;
+  setUpdatedSavingGoal: (updatedSavingGoal: boolean) => void;
 }
 
 const RoundUpModal = ({
   accountUid,
   savingsGoalUid,
   selectedDate,
+    setUpdatedSavingGoal
 }: RoundUpModalProps) => {
   const handleRoundUp = () => {
     if (!selectedDate) return;
@@ -38,6 +40,7 @@ const RoundUpModal = ({
     };
     try {
       roundUpTransaction(roundUpRequest).then((data) => {
+        setUpdatedSavingGoal(true);
         toast.success(data.roundUpMessage);
       });
     } catch (error) {
