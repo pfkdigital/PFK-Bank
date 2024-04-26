@@ -7,9 +7,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.techtest.starling.model.*;
 
@@ -24,7 +22,6 @@ public interface SavingsGoalApi {
             @ApiResponse(responseCode = "404", description = "Savings goals not found", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))}),
             @ApiResponse(responseCode = "500", description = "Internal server error", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))})
     })
-    @GetMapping("/account/{accountUid}")
     ResponseEntity<?> getSavingsGoals(@PathVariable UUID accountUid);
 
     @Operation(summary = "Transfer money to savings goal", description = "transfers money to a specific savings goal")
@@ -34,6 +31,13 @@ public interface SavingsGoalApi {
             @ApiResponse(responseCode = "404", description = "Savings goal not found", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))}),
             @ApiResponse(responseCode = "500", description = "Internal server error", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))})
     })
-    @PutMapping("/account/{accountUid}/savings-goal/{savingsGoalUid}")
     ResponseEntity<?> transferMoneyToSavingsGoal(@PathVariable UUID accountUid, @PathVariable UUID savingsGoalUid, @RequestBody TopUpRequestV2 topUpRequestV2);
+
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successfully created new savings goals", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = SavingGoalV2.class))}),
+            @ApiResponse(responseCode = "404", description = "Account not found", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))}),
+            @ApiResponse(responseCode = "404", description = "Savings goals not found", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))}),
+            @ApiResponse(responseCode = "500", description = "Internal server error", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))})
+    })
+    ResponseEntity<?> createNewSavingsGoals(@PathVariable UUID accountUid, @RequestBody SavingsGoalRequestV2 savingsGoalRequestV2);
 }

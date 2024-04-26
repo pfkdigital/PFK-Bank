@@ -30,6 +30,7 @@ const RoundUpModal = ({
 }: RoundUpModalProps) => {
   const handleRoundUp = () => {
     if (!selectedDate) return;
+    setUpdatedSavingGoal(false);
     const { minTransactionTimestamp, maxTransactionTimestamp } =
       getSelectedWeekTimestamp(selectedDate);
     const roundUpRequest: RoundUpRequestType = {

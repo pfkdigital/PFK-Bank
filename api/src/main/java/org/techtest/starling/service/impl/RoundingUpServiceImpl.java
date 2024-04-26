@@ -80,7 +80,7 @@ public class RoundingUpServiceImpl implements RoundingUpService {
 
         return RoundUpResponse.builder()
                 .transferResponseV2(savingsGoalTransferResponseV2)
-                .roundUpMessage("Round up of " + currency.getSymbol() + roundUpAmount + " transferred to saving goal: " + savingGoal.getName())
+                .roundUpMessage("Round up of " + currency.getSymbol() + roundUpAmount.movePointLeft(2) + " transferred to saving goal: " + savingGoal.getName())
                 .build();
     }
 

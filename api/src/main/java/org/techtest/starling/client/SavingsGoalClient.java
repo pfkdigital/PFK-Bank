@@ -21,6 +21,9 @@ public class SavingsGoalClient {
     @Value("${starling.savings-goals.all-savings-goals.endpoint}")
     private String savingGoalsUrl;
 
+    @Value("${starling.savings-goals.create-savings-goal.endpoint}")
+    private String createSavingsGoalUrl;
+
     @Value("${starling.savings-goals.transfer-money-to-savings-goal.endpoint}")
     private String savingsGoalTransferUrl;
 
@@ -67,5 +70,28 @@ public class SavingsGoalClient {
                     throw new ApiRuntimeException(response,"Error while transferring money to savings goal");
                 })
                 .body(SavingsGoalTransferResponseV2.class);
+    }
+
+    /**
+     * Create a new savings goal
+     *
+     * @param accountUid           accountUid
+     * @param savingsGoalRequestV2 savingsGoalRequestV2
+     * @return CreateOrUpdateSavingsGoalResponseV2
+     */
+    public CreateOrUpdateSavingsGoalResponseV2 createNewSavingsGoals(UUID accountUid, SavingsGoalRequestV2 savingsGoalRequestV2) {
+        log.info("Creating a new savings goal");
+        return baseHttpClient
+                .getRestClient()
+                .put()
+                .uri(createSavingsGoalUrl, accountUid)
+                .accept(MediaType.APPLICATION_JSON)
+                .body(savingsGoalRequestV2)
+                .retrieve()
+                .onStatus(HttpStatusCode::isError, (request, response) -> {
+                    log.error("Error while creating new savings goals");
+                    throw new ApiRuntimeException(response,"Error while creating new savings goals");
+                })
+                .body(CreateOrUpdateSavingsGoalResponseV2.class);
     }
 }

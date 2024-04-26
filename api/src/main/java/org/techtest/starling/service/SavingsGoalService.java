@@ -32,4 +32,12 @@ public interface SavingsGoalService {
      * @return SavingsGoalTransferResponse
      */
     SavingsGoalTransferResponseV2 transferMoneyToSavingsGoal(TopUpRequestV2 topUpRequestV2, UUID accountUid, UUID savingsGoalUid);
+
+    /**
+     * Create new savings goals
+     * @param accountUid the accounts unique identifier
+     * @param savingsGoalRequestV2 the savings goal request
+     * @return CreateOrUpdateSavingsGoalResponse
+     */
+    CreateOrUpdateSavingsGoalResponseV2 createNewSavingsGoals(UUID accountUid, SavingsGoalRequestV2 savingsGoalRequestV2);
 }

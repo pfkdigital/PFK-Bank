@@ -104,4 +104,37 @@ class SavingsGoalControllerTest {
 
         verify(savingsGoalService).transferMoneyToSavingsGoal(topUpRequestV2, accountUid, savingsGoalUid);
     }
+
+    @DisplayName("Should create a new savings goal for an account")
+    @Test
+    void shouldCreateANewSavingsGoalForAnAccount() throws Exception {
+        //Arrange
+        SavingsGoalRequestV2 savingsGoalRequestV2 = SavingsGoalRequestV2
+                .builder()
+                .name("Test Savings Goal")
+                .currency("GBP")
+                .target(CurrencyAndAmount.builder().currency("GBP").minorUnits(BigDecimal.valueOf(1000)).build())
+                .build();
+
+        CreateOrUpdateSavingsGoalResponseV2 createOrUpdateSavingsGoalResponseV2 = CreateOrUpdateSavingsGoalResponseV2
+                .builder()
+                .savingsGoalUid(savingsGoalUid)
+                .success(true)
+                .build();
+
+        when(savingsGoalService.createNewSavingsGoals(accountUid, savingsGoalRequestV2)).thenReturn(createOrUpdateSavingsGoalResponseV2);
+
+        //Act
+        ResultActions resultActions = mockMvc.perform(
+                put("/api/v1/savings-goals/account/" + accountUid)
+                        .contentType("application/json")
+                        .content(objectMapper.writeValueAsString(savingsGoalRequestV2))
+        );
+
+        //Assert
+        assertEquals(HttpStatus.OK.value(), resultActions.andReturn().getResponse().getStatus());
+        assertEquals(objectMapper.writeValueAsString(createOrUpdateSavingsGoalResponseV2), resultActions.andReturn().getResponse().getContentAsString());
+
+        verify(savingsGoalService).createNewSavingsGoals(accountUid, savingsGoalRequestV2);
+    }
 }

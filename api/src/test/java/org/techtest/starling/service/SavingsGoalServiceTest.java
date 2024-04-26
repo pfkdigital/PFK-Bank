@@ -128,4 +128,36 @@ public class SavingsGoalServiceTest {
 
         verify(savingsGoalClient).transferMoneyToSavingsGoal(any(TopUpRequestV2.class), any(UUID.class), any(UUID.class), any(UUID.class));
     }
+
+    @Test
+    @DisplayName("Test create new savings goal")
+    public void testCreateNewSavingsGoal() {
+        // Arrange
+        SavingGoalV2 testSavingGoal = new SavingGoalV2();
+        UUID accountUid = UUID.randomUUID();
+        UUID savingsGoalUid = UUID.randomUUID();
+
+        testSavingGoal.setSavingsGoalUid(savingsGoalUid);
+        testSavingGoal.setName("Test Savings Goal");
+        testSavingGoal.setTarget(new CurrencyAndAmount("GBP", BigDecimal.valueOf(1000)));
+        SavingsGoalRequestV2 savingsGoalRequestV2 = SavingsGoalRequestV2.builder()
+                .name("Test Savings Goal")
+                .currency("GBP")
+                .target(new CurrencyAndAmount("GBP", BigDecimal.valueOf(1000)))
+                .build();
+        CreateOrUpdateSavingsGoalResponseV2 createOrUpdateSavingsGoalResponseV2 = new CreateOrUpdateSavingsGoalResponseV2(savingsGoalUid,true);
+
+        when(savingsGoalClient.createNewSavingsGoals(accountUid, savingsGoalRequestV2)).thenReturn(createOrUpdateSavingsGoalResponseV2);
+
+        // Act
+        CreateOrUpdateSavingsGoalResponseV2 response = savingsGoalService.createNewSavingsGoals(accountUid, savingsGoalRequestV2);
+
+        // Assert
+        assertNotNull(response);
+        assertEquals(savingsGoalUid, response.getSavingsGoalUid());
+
+        verify(savingsGoalClient).createNewSavingsGoals(accountUid, savingsGoalRequestV2);
+    }
+
+
 }

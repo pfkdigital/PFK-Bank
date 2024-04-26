@@ -39,4 +39,10 @@ public class SavingsGoalServiceImpl implements SavingsGoalService {
 
         return savingsGoalClient.transferMoneyToSavingsGoal(topUpRequest, accountUid, savingsGoalUid, transferUid);
     }
+
+    @Override
+    public CreateOrUpdateSavingsGoalResponseV2 createNewSavingsGoals(UUID accountUid, SavingsGoalRequestV2 savingsGoalRequestV2) {
+        log.info("Creating a new savings goal for accountUid: {}", accountUid);
+        return savingsGoalClient.createNewSavingsGoals(accountUid, savingsGoalRequestV2);
+    }
 }
